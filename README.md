@@ -38,7 +38,7 @@ This project demonstrates a complete **MLOps pipeline** built using **Linear Reg
 
 ---
 
-## ✅ Model Comparison Table
+## Model Comparison Table
 
 | Model Stage               | Format   | File Name                 | Size  | R² Score | MSE     |
 |---------------------------|----------|---------------------------|-------|----------|---------|
