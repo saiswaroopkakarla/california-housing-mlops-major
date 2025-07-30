@@ -3,16 +3,34 @@ import numpy as np
 from sklearn.datasets import fetch_california_housing
 from sklearn.metrics import mean_squared_error
 
-def quantize(array):
+"""def quantize(array):
     # Scale to 0–255
     min_val = array.min()
     max_val = array.max()
     scale = 255 / (max_val - min_val)
     quantized = ((array - min_val) * scale).astype(np.uint8)
-    return quantized, scale, min_val
+    return quantized, scale, min_val"""
 
-def dequantize(q_array, scale, min_val):
-    return q_array.astype(np.float32) / scale + min_val
+def quantize(array):
+    min_val = np.min(array)
+    max_val = np.max(array)
+
+    if max_val - min_val == 0:
+        quantized = np.zeros_like(array, dtype=np.uint8)
+        scale = 1
+    else:
+        scale = 255 / (max_val - min_val)
+        quantized = np.round((array - min_val) * scale).astype(np.uint8)
+
+    return quantized, min_val, max_val
+
+
+def dequantize(quantized, min_val, max_val):
+    if max_val - min_val == 0:
+        return np.full_like(quantized, fill_value=min_val, dtype=np.float32)
+    else:
+        scale = (max_val - min_val) / 255
+        return (quantized.astype(np.float32) * scale) + min_val
 
 def main():
     # Load trained model
