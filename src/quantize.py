@@ -16,13 +16,13 @@ def dequantize(q_array, scale, min_val):
 
 def main():
     # Load trained model
-    model = joblib.load("../artifacts/linear_model.joblib")
+    model = joblib.load("artifacts/linear_model.joblib")
     coef = model.coef_
     intercept = model.intercept_
 
     # Save raw params
     raw_params = {"coef": coef, "intercept": intercept}
-    joblib.dump(raw_params, "../artifacts/unquant_params.joblib")
+    joblib.dump(raw_params, "artifacts/unquant_params.joblib")
     print("Saved unquantized parameters")
 
     # Quantize
@@ -36,7 +36,7 @@ def main():
         "mins": {"coef": coef_min, "intercept": int_min}
     }
 
-    joblib.dump(quant_params, "../artifacts/quant_params.joblib")
+    joblib.dump(quant_params, "artifacts/quant_params.joblib")
     print("Saved quantized parameters")
 
     # Inference using dequantized weights
